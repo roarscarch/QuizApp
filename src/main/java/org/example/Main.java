@@ -8,7 +8,5 @@ public class Main {
 
         System.out.println("Welcome to Our Quiz Application");
         QuizManager.quizManager(new Scanner(System.in));
-
-
     }
 }

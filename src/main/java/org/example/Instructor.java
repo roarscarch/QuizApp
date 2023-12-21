@@ -1,8 +1,7 @@
 package org.example;
 
-import java.util.HashMap;
-import java.util.InputMismatchException;
-import java.util.Scanner;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Instructor {
     private static final int EXIT_CHOICE = 0;
@@ -84,6 +83,26 @@ public class Instructor {
         scanner.nextLine();
         quiz.deleteQuestion(deleteQuestion);
         System.out.println("Question deleted successfully!\n");
+    }
+
+    public void getQuizzesByDifficulty(int difficulty) {
+        if (difficulty != 1 && difficulty != 2 && difficulty != 3) {
+            System.out.println("Please enter valid difficulty.\n");
+        }
+        QuizTag quizTag = difficulty == 1 ? QuizTag.EASY
+                : difficulty == 2 ? QuizTag.MEDIUM : QuizTag.HARD;
+        List<Quiz> filteredQuizzes = mapOfAllQuiz.values().stream()
+                .filter(quiz -> quiz.difficulty == quizTag)
+                .collect(Collectors.toCollection(ArrayList::new));
+        if (filteredQuizzes.size() != 0) {
+            System.out.println("Following are the quizzes of difficulty " + quizTag);
+            for (Quiz quiz : filteredQuizzes) {
+                System.out.println("-- Quiz ID: " + quiz.quizID);
+            }
+            System.out.println();
+        } else {
+            System.out.println("No quizzes of difficulty " + quizTag + " found!\n");
+        }
     }
 
     @Override
